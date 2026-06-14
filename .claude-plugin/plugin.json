@@ -1,0 +1,9 @@
+{
+  "name": "swarm",
+  "version": "0.1.0",
+  "description": "Adaptive agent swarm for Claude Code: fan a task across Opus/Sonnet/MiniMax windows with blind-panel + structured-judge synthesis, loop-until-dry, adversarial verify, and a thermal governor. No API keys, no headless -p.",
+  "author": { "name": "pasekaalex", "url": "https://github.com/pasekaalex" },
+  "repository": "https://github.com/pasekaalex/claude-swarm",
+  "license": "MIT",
+  "keywords": ["swarm", "agents", "multi-agent", "workflow", "ensemble", "fan-out", "opus", "sonnet", "minimax"]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "claude-swarm",
+  "owner": { "name": "pasekaalex", "url": "https://github.com/pasekaalex" },
+  "plugins": [
+    {
+      "name": "swarm",
+      "source": "./",
+      "description": "Adaptive agent swarm (Opus/Sonnet/MiniMax) with blind-panel + judge synthesis, loop-until-dry, adversarial verify, and a thermal governor.",
+      "version": "0.1.0"
+    }
+  ]
+}
