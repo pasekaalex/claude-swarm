@@ -5,9 +5,11 @@ export const meta = {
 }
 
 // args: { question, tier:{wide,judge}, dryRounds=2, maxRounds=4 }
-const Q = args.question
-const wide = (args.tier && args.tier.wide) || 'sonnet'
-const judgeModel = (args.tier && args.tier.judge) || 'opus'
+// The Workflow runtime delivers `args` as a JSON string; parse defensively.
+const A = (() => { try { return typeof args === 'string' ? JSON.parse(args) : (args || {}); } catch (e) { return {}; } })();
+const Q = A.question
+const wide = (A.tier && A.tier.wide) || 'sonnet'
+const judgeModel = (A.tier && A.tier.judge) || 'opus'
 const ANGLES = ['primary sources & docs', 'by-entity / who-is-involved', 'contrarian / what-could-be-wrong', 'recent / time-sensitive']
 
 const FINDINGS = {
@@ -26,7 +28,7 @@ const VERDICT = {
 phase('Search')
 const seen = new Set(); const all = []
 let dry = 0; let round = 0
-const maxRounds = args.maxRounds || 4; const dryStop = args.dryRounds || 2
+const maxRounds = A.maxRounds || 4; const dryStop = A.dryRounds || 2
 while (dry < dryStop && round < maxRounds) {
   round++
   const batch = await parallel(ANGLES.map((angle, i) => () =>

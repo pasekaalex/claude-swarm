@@ -4,13 +4,15 @@ export const meta = {
   phases: [{ title: 'Process' }, { title: 'Judge' }],
 }
 // args: { items:[...], instruction, tier:{wide,judge} }
-const wide = (args.tier && args.tier.wide) || 'sonnet'
-const judgeModel = (args.tier && args.tier.judge) || 'opus'
-const items = args.items || []
+// The Workflow runtime delivers `args` as a JSON string; parse defensively.
+const A = (() => { try { return typeof args === 'string' ? JSON.parse(args) : (args || {}); } catch (e) { return {}; } })();
+const wide = (A.tier && A.tier.wide) || 'sonnet'
+const judgeModel = (A.tier && A.tier.judge) || 'opus'
+const items = A.items || []
 
 phase('Process')
 const processed = await parallel(items.map((it, i) => () =>
-  agent(`${args.instruction}\nItem ${i}: ${JSON.stringify(it)}`,
+  agent(`${A.instruction}\nItem ${i}: ${JSON.stringify(it)}`,
     { model: wide, phase: 'Process', label: `item:${i}` })
     .then((out) => ({ item: it, out }))))
 

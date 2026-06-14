@@ -26,7 +26,8 @@ export async function runTemplate(file, { args = {}, agentImpl, budgetTotal = nu
     phase: (t) => calls.phases.push(t),
     log: (m) => calls.logs.push(m),
     budget: { total: budgetTotal, spent: () => 0, remaining: () => (budgetTotal == null ? Infinity : budgetTotal) },
-    args,
+    // Mirror the real Workflow runtime, which delivers `args` to the script as a JSON string.
+    args: typeof args === 'string' ? args : JSON.stringify(args ?? {}),
   };
   const fn = new Function(
     ...Object.keys(sandbox),
